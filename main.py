@@ -17,7 +17,6 @@ transform = transforms.Compose([
     transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])  
 ])
 
-
 card_labels = {
     "ace of hearts": 0, "two of hearts": 1, "three of hearts": 2, "four of hearts": 3, "five of hearts": 4,
     "six of hearts": 5, "seven of hearts": 6, "eight of hearts": 7, "nine of hearts": 8, "ten of hearts": 9,
@@ -32,27 +31,22 @@ card_labels = {
     "queen of clubs": 50, "king of clubs": 51, "joker": 52
 }
 
-
 class CustomImageFolder(datasets.ImageFolder):
     def __init__(self, root, transform=None, target_transform=None):
         super().__init__(root, transform=transform, target_transform=target_transform)
   
         self.class_to_idx = card_labels  
 
-
-train_data = CustomImageFolder(root="C:\\Users\\Sakthi\\Downloads\\Cards_dataset\\train", transform=transform)
-test_data = CustomImageFolder(root="C:\\Users\\Sakthi\\Downloads\\Cards_dataset\\test", transform=transform)
-
+train_data = CustomImageFolder(root="Path_to_your_training_data_from_cards_dataset", transform=transform)
+test_data = CustomImageFolder(root="Path_to_your_testing_data_from_cards_dataset", transform=transform)
 
 train_loader = DataLoader(train_data, batch_size=16, shuffle=True)
 test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
-
 
 for images, labels in train_loader:
     print("Labels range:", labels.min().item(), "to", labels.max().item())  
     assert labels.min().item() >= 0 and labels.max().item() < 53, "Labels out of range"
     break
-
 
 class SimpleCNN(nn.Module):
     def __init__(self):
@@ -121,7 +115,7 @@ accuracy = 100 * correct / total
 print(f"Test Accuracy: {accuracy:.2f}%")
 
 
-image_path = "C:\\Users\\Sakthi\\Downloads\\jackofcards.jpg"  
+image_path = "Path_to_your_input_image"  
 image = Image.open(image_path)
 
 
